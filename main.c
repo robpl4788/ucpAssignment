@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "main.h"
+#include "random.h"
 
 int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
 {
@@ -14,14 +15,19 @@ int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
     else {
         *pRows = atoi(argv[1]);
         *pCols = atoi(argv[2]);
-        if (*pRows < 3 || *pRows % 2 == 0)
+        if (*pRows < 3)
         {
-            printf("Row number is invalid");
+            printf("Row number ( %d ) is invalid, must be greater than 3\n", *pRows);
+            inputsAreValid = FALSE;
+        }
+        if (*pRows % 2 == 0)
+        {
+            printf("Row number ( %d ) is invalid, must be even\n", *pRows);
             inputsAreValid = FALSE;
         }
         if (*pCols < 5)
         {
-            printf("Column number is invalid");
+            printf("Column number ( %d ) is invalid, must be greater than 5\n", *pCols);
             inputsAreValid = FALSE;
         }
     }
@@ -30,23 +36,66 @@ int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
 }
 
 int main(int argc, char* argv[]){
-    /* Check Inputs */
+    /* Validate Inputs */
     int rows, columns;
     
-    printf("%d\n", validateInputs(&rows, &columns, &argc, argv));
-    printf("%d, %d\n", rows, columns);
-
+    if (validateInputs(&rows, &columns, &argc, argv) == TRUE) {
 
     /* Initialise Map */
 
+    /*int playerPosition[] = {0, 0};*/
+
+    int roadCount = rows / 2;
+
+    int* carPositions = malloc(sizeof(int) * roadCount);
+    int* carDirections = malloc(sizeof(int) * roadCount);
+    int i;
+
+    initRandom();
+
+    for (i = 0; i < roadCount; i ++)
+    {
+        carPositions[i] = randomUCP(0, columns - 1);
+        if (carPositions[i] == 0) 
+        {
+            carDirections[i] = RIGHT;
+        }
+        else if (carPositions[i] == columns - 1)
+        {
+            carDirections[i] = LEFT;
+        }
+        else
+        {
+            carDirections[i] = randomUCP(0, 1) * 2 - 1;
+        }
+    }
+
+    /* Test Car Generation 
+    for (i = 0; i < roadCount; i ++)
+    {
+        printf("%d ", carPositions[i]);
+    }
+    printf("\n");
+    for (i = 0; i < roadCount; i ++)
+    {
+        printf("%d ", carDirections[i]);
+    }*/
+
     /* Loop until win or lose */
+        /* Print board */
         /* Get input */
         /* Update board and check win/loss */
-        /* Print updated board */
 
     /* Handle Win */
 
     /* Handle Lose*/
+
+    /* End Game */
+
+    free(carPositions);
+    free(carDirections);
+
+    }
 
     return 0;
 }

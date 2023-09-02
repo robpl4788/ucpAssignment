@@ -8,4 +8,7 @@
 #define LOSE -1
 #define PLAYING 0
 
+#define LEFT -1
+#define RIGHT 1
+
 #endif
