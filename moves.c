@@ -16,7 +16,7 @@ void getMove(int rows, int columns, int playerMove[2], int playerPosition[2])
     {
         playerMove[1] = -1;
     }
-    else if (input == 's' && playerPosition[1] != rows)
+    else if (input == 's' && playerPosition[1] != rows - 1)
     {
         playerMove[1] = 1;
     }
@@ -24,7 +24,7 @@ void getMove(int rows, int columns, int playerMove[2], int playerPosition[2])
     {
         playerMove[0] = -1;
     }
-    else if (input == 'd' && playerPosition[0] != columns)
+    else if (input == 'd' && playerPosition[0] != columns - 1)
     {
         playerMove[0] = 1;
     }

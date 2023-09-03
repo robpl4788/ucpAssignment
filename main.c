@@ -88,25 +88,46 @@ int main(int argc, char* argv[]) {
         printf("%d ", carDirections[i]);
     }*/
 
-    printBoard(rows, columns, playerPosition, carPositions, carDirections);
-
-    while (playerMove[0] == 0 && playerMove[1] == 0)
-    {
-        getMove(rows, columns, playerMove, playerPosition);
-    }
-
-    playerPosition[0] = playerPosition[0] + playerMove[0];
-    playerPosition[1] = playerPosition[1] + playerPosition[1];
-    
-    /*moveCars(carPositions, carDirections, roadCount, columns, playerPosition[2], &gameStatus);*/
-
 
     /* Loop until win or lose */
         /* Print board */
         /* Get input */
         /* Update board and check win/loss */
+    system("clear");
+    while (gameStatus == PLAYING) 
+    {
+        playerMove[0] = 0;
+        playerMove[1] = 0;
+
+        printBoard(rows, columns, playerPosition, carPositions, carDirections);
+
+        while (playerMove[0] == 0 && playerMove[1] == 0)
+        {
+            getMove(rows, columns, playerMove, playerPosition);
+        }
+
+        playerPosition[0] = playerPosition[0] + playerMove[0];
+        playerPosition[1] = playerPosition[1] + playerMove[1];
+        
+        moveCars(carPositions, carDirections, roadCount, columns, playerPosition, &gameStatus);
+
+        if (playerPosition[0] == columns - 1 && playerPosition[1] == rows - 1)
+        {
+            gameStatus = WIN;
+        }
+    
+        system("tput cup 0 0");
+
+    }
+
+    printBoard(rows, columns, playerPosition, carPositions, carDirections);
 
     /* Handle Win */
+    if (gameStatus == WIN) {
+        printf("You Win\n");
+    } else if (gameStatus == LOSE) {
+        printf("You Lose\n");
+    }
 
     /* Handle Lose*/
 

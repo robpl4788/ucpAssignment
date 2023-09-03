@@ -68,7 +68,7 @@ static void printSafeRow(int columns, int playerPosition, int goal)
 void printBoard(int rows, int columns, int playerPosition[2], int* carPositions, int* carDirections)
 {
     int i;
-    int finalPlayerX = playerPosition[1] == columns - 1 ? playerPosition[0] : -1; 
+    int finalPlayerX = playerPosition[1] == rows - 1 ? playerPosition[0] : -1; 
 
     printBorderRow(columns);
 
@@ -90,4 +90,9 @@ void printBoard(int rows, int columns, int playerPosition[2], int* carPositions,
     printSafeRow(columns, finalPlayerX, TRUE);
 
     printBorderRow(columns);
+
+    printf("w to move up\n");
+    printf("a to move left\n");
+    printf("s to move down\n");
+    printf("d to move right\n");
 }
