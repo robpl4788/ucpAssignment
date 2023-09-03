@@ -7,8 +7,7 @@
 #include "printBoard.h"
 #include "moves.h"
 
-int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
-{
+int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[]) {
     int inputsAreValid = TRUE;
 
     if (*pArgc != 3) {
@@ -38,7 +37,7 @@ int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
     return inputsAreValid;
 }
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
     /* Validate Inputs */
 
     int rows, columns;
@@ -52,6 +51,8 @@ int main(int argc, char* argv[]){
     int playerMove[] = {0, 0};
 
     int roadCount = rows / 2;
+
+    int gameStatus = PLAYING;
 
     int* carPositions = malloc(sizeof(int) * roadCount);
     int* carDirections = malloc(sizeof(int) * roadCount);
@@ -97,6 +98,8 @@ int main(int argc, char* argv[]){
     playerPosition[0] = playerPosition[0] + playerMove[0];
     playerPosition[1] = playerPosition[1] + playerPosition[1];
     
+    /*moveCars(carPositions, carDirections, roadCount, columns, playerPosition[2], &gameStatus);*/
+
 
     /* Loop until win or lose */
         /* Print board */
