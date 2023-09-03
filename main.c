@@ -5,6 +5,7 @@
 #include "random.h"
 #include "constants.h"
 #include "printBoard.h"
+#include "moves.h"
 
 int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
 {
@@ -39,12 +40,12 @@ int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
 
 int main(int argc, char* argv[]){
     /* Validate Inputs */
-    
+
+    int rows, columns;
+
     if (validateInputs(&rows, &columns, &argc, argv) == TRUE) {
 
     /* Initialise Map */
-
-    int rows, columns;
 
     int playerPosition[] = {0, 0};
 
@@ -88,7 +89,7 @@ int main(int argc, char* argv[]){
 
     printBoard(rows, columns, playerPosition, carPositions, carDirections);
 
-    while (playerMove == {0, 0})
+    while (playerMove[0] == 0 && playerMove[1] == 0)
     {
         getMove(rows, columns, playerMove, playerPosition);
     }
@@ -96,7 +97,7 @@ int main(int argc, char* argv[]){
     playerPosition[0] = playerPosition[0] + playerMove[0];
     playerPosition[1] = playerPosition[1] + playerPosition[1];
     
-    
+
     /* Loop until win or lose */
         /* Print board */
         /* Get input */

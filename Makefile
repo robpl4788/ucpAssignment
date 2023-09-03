@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -pedantic -ansi
-OBJ = main.o random.o printBoard.o
+OBJ = main.o random.o printBoard.o moves.o terminal.o
 EXEC = traffic
 
 $(EXEC) : $(OBJ)
@@ -15,6 +15,12 @@ random.o: random.c random.h
 
 printBoard.o: printBoard.c printBoard.h constants.h
 	$(CC) -c printBoard.c $(CFLAGS)
+
+moves.o: moves.c moves.h terminal.h
+	$(CC) -c moves.c $(CFLAGS)
+
+terminal.o: terminal.c terminal.h
+	$(CC) -c terminal.c $(CFLAGS)
 
 clean:
 	rm -f $(EXEC) $(OBJ)
