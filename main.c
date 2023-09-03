@@ -3,6 +3,8 @@
 
 #include "main.h"
 #include "random.h"
+#include "constants.h"
+#include "printBoard.h"
 
 int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
 {
@@ -37,13 +39,16 @@ int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[])
 
 int main(int argc, char* argv[]){
     /* Validate Inputs */
-    int rows, columns;
     
     if (validateInputs(&rows, &columns, &argc, argv) == TRUE) {
 
     /* Initialise Map */
 
-    /*int playerPosition[] = {0, 0};*/
+    int rows, columns;
+
+    int playerPosition[] = {0, 0};
+
+    int playerMove[] = {0, 0};
 
     int roadCount = rows / 2;
 
@@ -81,6 +86,17 @@ int main(int argc, char* argv[]){
         printf("%d ", carDirections[i]);
     }*/
 
+    printBoard(rows, columns, playerPosition, carPositions, carDirections);
+
+    while (playerMove == {0, 0})
+    {
+        getMove(rows, columns, playerMove, playerPosition);
+    }
+
+    playerPosition[0] = playerPosition[0] + playerMove[0];
+    playerPosition[1] = playerPosition[1] + playerPosition[1];
+    
+    
     /* Loop until win or lose */
         /* Print board */
         /* Get input */
