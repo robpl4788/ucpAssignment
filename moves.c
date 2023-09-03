@@ -41,14 +41,14 @@ void moveCars(int* carPositions, int* carDirections, int roadCount, int columns,
 
         if (carPositions[i] == 0)
         {
-            carDirections[i] == RIGHT;
+            carDirections[i] = RIGHT;
         }
         else if (carPositions[i] == columns - 1)
         {
-            carDirections[i] == LEFT;
+            carDirections[i] = LEFT;
         }
 
-        if (carPositions[i] == playerPosition[0] && row = playerPosition[1])
+        if (carPositions[i] == playerPosition[0] && row == playerPosition[1])
         {
             *PgameStatus = LOSE;
         }
