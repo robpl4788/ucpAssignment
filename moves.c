@@ -4,7 +4,7 @@
 #include "terminal.h"
 #include "constants.h"
 
-void getMove(int rows, int columns, int playerMove[2], int playerPosition[2])
+void getMove(int rows, int columns, vector2d* playerMove, vector2d* playerPosition)
 {
     char input;
     
@@ -12,25 +12,25 @@ void getMove(int rows, int columns, int playerMove[2], int playerPosition[2])
     scanf(" %c", &input);
     enableBuffer();
 
-    if (input == 'w' && playerPosition[1] != 0)
+    if (input == 'w' && playerPosition->y != 0)
     {
-        playerMove[1] = -1;
+        playerMove->y = -1;
     }
-    else if (input == 's' && playerPosition[1] != rows - 1)
+    else if (input == 's' && playerPosition->y != rows - 1)
     {
-        playerMove[1] = 1;
+        playerMove->y = 1;
     }
-    else if (input == 'a' && playerPosition[0] != 0)
+    else if (input == 'a' && playerPosition->x != 0)
     {
-        playerMove[0] = -1;
+        playerMove->x = -1;
     }
-    else if (input == 'd' && playerPosition[0] != columns - 1)
+    else if (input == 'd' && playerPosition->x != columns - 1)
     {
-        playerMove[0] = 1;
+        playerMove->x = 1;
     }
 }
 
-void moveCars(int* carPositions, int* carDirections, int roadCount, int columns, int playerPosition[2], int* PgameStatus)
+void moveCars(int* carPositions, int* carDirections, int roadCount, int columns, vector2d* playerPosition, int* PgameStatus)
 {
     int i;
     for (i = 0; i < roadCount; i ++)
@@ -48,7 +48,7 @@ void moveCars(int* carPositions, int* carDirections, int roadCount, int columns,
             carDirections[i] = LEFT;
         }
 
-        if (carPositions[i] == playerPosition[0] && row == playerPosition[1])
+        if (carPositions[i] == playerPosition->x && row == playerPosition->y)
         {
             *PgameStatus = LOSE;
         }

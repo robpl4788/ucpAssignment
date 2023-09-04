@@ -3,33 +3,33 @@
 
 #include "main.h"
 #include "random.h"
-#include "constants.h"
 #include "printBoard.h"
 #include "moves.h"
+#include "constants.h"
 
 int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[]) {
     int inputsAreValid = TRUE;
 
     if (*pArgc != 3) {
         inputsAreValid = FALSE;
-        printf("Incorrect number of arguments\n");
+        printf("Incorrect number of arguments, should be 2, is %d\n", *pArgc);
     }
     else {
         *pRows = atoi(argv[1]);
         *pCols = atoi(argv[2]);
         if (*pRows < 3)
         {
-            printf("Row number ( %d ) is invalid, must be greater than 3\n", *pRows);
+            printf("Row number ( %d ) is invalid, must be greater than 2\n", *pRows);
             inputsAreValid = FALSE;
         }
         if (*pRows % 2 == 0)
         {
-            printf("Row number ( %d ) is invalid, must be even\n", *pRows);
+            printf("Row number ( %d ) is invalid, must be odd\n", *pRows);
             inputsAreValid = FALSE;
         }
         if (*pCols < 5)
         {
-            printf("Column number ( %d ) is invalid, must be greater than 5\n", *pCols);
+            printf("Column number ( %d ) is invalid, must be greater than 4\n", *pCols);
             inputsAreValid = FALSE;
         }
     }
@@ -42,13 +42,13 @@ int main(int argc, char* argv[]) {
 
     int rows, columns;
 
-    if (validateInputs(&rows, &columns, &argc, argv) == TRUE) {
+    if (validateInputs(&rows, &columns, &argc, argv)) {
 
     /* Initialise Map */
 
-    int playerPosition[] = {0, 0};
+    vector2d playerPosition = {0, 0};
 
-    int playerMove[] = {0, 0};
+    vector2d playerMove = {0, 0};
 
     int roadCount = rows / 2;
 
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
         }
         else
         {
-            carDirections[i] = randomUCP(0, 1) * 2 - 1;
+            carDirections[i] = randomUCP(0, 1) == 0 ? LEFT : RIGHT;
         }
     }
 
@@ -96,22 +96,22 @@ int main(int argc, char* argv[]) {
     system("clear");
     while (gameStatus == PLAYING) 
     {
-        playerMove[0] = 0;
-        playerMove[1] = 0;
+        playerMove.x = 0;
+        playerMove.y = 0;
 
         printBoard(rows, columns, playerPosition, carPositions, carDirections);
 
-        while (playerMove[0] == 0 && playerMove[1] == 0)
+        while (playerMove.x == 0 && playerMove.y == 0)
         {
-            getMove(rows, columns, playerMove, playerPosition);
+            getMove(rows, columns, &playerMove, &playerPosition);
         }
 
-        playerPosition[0] = playerPosition[0] + playerMove[0];
-        playerPosition[1] = playerPosition[1] + playerMove[1];
+        playerPosition.x += playerMove.x;
+        playerPosition.y += playerMove.y;
         
-        moveCars(carPositions, carDirections, roadCount, columns, playerPosition, &gameStatus);
+        moveCars(carPositions, carDirections, roadCount, columns, &playerPosition, &gameStatus);
 
-        if (playerPosition[0] == columns - 1 && playerPosition[1] == rows - 1)
+        if (playerPosition.x == columns - 1 && playerPosition.y == rows - 1)
         {
             gameStatus = WIN;
         }

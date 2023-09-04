@@ -65,16 +65,16 @@ static void printSafeRow(int columns, int playerPosition, int goal)
 
 }
 
-void printBoard(int rows, int columns, int playerPosition[2], int* carPositions, int* carDirections)
+void printBoard(int rows, int columns, vector2d playerPosition, int* carPositions, int* carDirections)
 {
     int i;
-    int finalPlayerX = playerPosition[1] == rows - 1 ? playerPosition[0] : -1; 
+    int finalPlayerX = playerPosition.y == rows - 1 ? playerPosition.x : -1; 
 
     printBorderRow(columns);
 
     for (i = 0; i < rows - 1; i ++)
     {
-        int playerX = playerPosition[1] == i ? playerPosition[0] : -1; 
+        int playerX = playerPosition.y == i ? playerPosition.x : -1; 
         if (i % 2 == 0)
         {
             printSafeRow(columns, playerX, FALSE);
