@@ -7,6 +7,10 @@
 #include "moves.h"
 #include "constants.h"
 
+
+// Checks the input arguments are valid
+// If invalid returns false and prints the reason
+
 int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[]) {
     int inputsAreValid = TRUE;
 
