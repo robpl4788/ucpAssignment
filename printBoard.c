@@ -10,7 +10,7 @@ static void printBorderRow(int columns)
     int i;
     for (i = 0; i < columns + 2; i ++)
     {
-        printf("*");
+        printf(WALL);
     }
     printf("\n");
 }
@@ -22,30 +22,31 @@ static void printBorderRow(int columns)
 static void printRoad(int columns, int carPosition, int carDirection, int playerPosition)
 {
     int i;
-    printf("*");
+    printf(WALL);
     for (i = 0; i < columns; i ++)
     {
         if (i == carPosition)
         {
             if (carDirection == LEFT)
             {
-                printf("<");
+                printf(LEFT_CAR);
             }
             else
             {
-                printf(">");
+                printf(RIGHT_CAR);
             }
         }
         else if (i == playerPosition)
         {
-            printf("P");
+            printf(PLAYER);
         }
         else 
         {
-        printf(".");
+        printf(ROAD);
         }
     }
-    printf("*\n");
+    printf(WALL);
+    printf("\n");
 
 }
 
@@ -55,23 +56,24 @@ static void printRoad(int columns, int carPosition, int carDirection, int player
 static void printSafeRow(int columns, int playerPosition, int goal)
 {
     int i;
-    printf("*");
+    printf(WALL);
     for (i = 0; i < columns; i ++)
     {
         if (i == playerPosition)
         {
-            printf("P");
+            printf(PLAYER);
         }
         else if (i == columns - 1 && goal == TRUE)
         {
-            printf("G");
+            printf(GOAL);
         }
         else 
         {
-        printf(" ");
+        printf(EMPTY);
         }
     }
-    printf("*\n");
+    printf(WALL);
+    printf("\n");
 
 }
 
@@ -107,8 +109,10 @@ void printBoard(int rows, int columns, vector2d playerPosition,
 
     printBorderRow(columns);
 
-    printf("w to move up\n");
-    printf("a to move left\n");
-    printf("s to move down\n");
-    printf("d to move right\n");
+    printf("%c to move up\n", KEY_UP);
+    printf("%c to move left\n", KEY_LEFT);
+    printf("%c to move right\n", KEY_RIGHT);
+    printf("%c to move down\n", KEY_DOWN);
+
+
 }

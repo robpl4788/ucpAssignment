@@ -17,19 +17,19 @@ static void getMove(int rows, int columns, vector2d* playerMove, vector2d* playe
     scanf( " %c", &input );
     enableBuffer();
 
-    if ( input == 'w' && playerPosition->y != 0 )
+    if ( input == KEY_UP && playerPosition->y != 0 )
     {
         playerMove->y = -1;
     }
-    else if ( input == 's' && playerPosition->y != rows - 1 )
+    else if ( input == KEY_DOWN && playerPosition->y != rows - 1 )
     {
         playerMove->y = 1;
     }
-    else if ( input == 'a' && playerPosition->x != 0 )
+    else if ( input == KEY_LEFT && playerPosition->x != 0 )
     {
         playerMove->x = -1;
     }
-    else if ( input == 'd' && playerPosition->x != columns - 1 )
+    else if ( input == KEY_RIGHT && playerPosition->x != columns - 1 )
     {
         playerMove->x = 1;
     }
