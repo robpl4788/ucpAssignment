@@ -11,7 +11,7 @@
 #define LEFT -1
 #define RIGHT 1
 
-typedef struct vector2d 
+typedef struct  
 {
     int x;
     int y;

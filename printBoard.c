@@ -49,7 +49,7 @@ static void printRoad(int columns, int carPosition, int carDirection, int player
 
 // Prints a row that is not a road
 // playerPosition is the horizontal position on this row
-// If player is not in this row playerPosition is -1
+// If player is not in this row playerPosition should be -1
 static void printSafeRow(int columns, int playerPosition, int goal)
 {
     int i;
@@ -75,7 +75,8 @@ static void printSafeRow(int columns, int playerPosition, int goal)
 
 
 //Clears the old board and prints an updated one
-void printBoard(int rows, int columns, vector2d playerPosition, int* carPositions, int* carDirections)
+void printBoard(int rows, int columns, vector2d playerPosition,
+                int* carPositions, int* carDirections)
 {
     int i;
     int finalPlayerX = playerPosition.y == rows - 1 ? playerPosition.x : -1; 

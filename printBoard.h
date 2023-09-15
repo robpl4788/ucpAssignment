@@ -3,6 +3,7 @@
 
 #include "constants.h"
 
-void printBoard(int roadCount, int columns, vector2d playerPosition, int* carPositions, int* carDirections);
+void printBoard(int roadCount, int columns, vector2d playerPosition, 
+                int* carPositions, int* carDirections);
 
 #endif
