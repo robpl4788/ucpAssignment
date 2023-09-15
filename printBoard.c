@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "printBoard.h"
 #include "constants.h"
 
-// Prints the top and bottom row
+/*  Prints the top and bottom row */
 static void printBorderRow(int columns)
 {
     int i;
@@ -14,9 +16,9 @@ static void printBorderRow(int columns)
 }
 
 
-// Prints a road row
-// Player position is horizontal position in this row
-// If player is not in this row player position should be -1
+/*  Prints a road row
+    Player position is horizontal position in this row
+    If player is not in this row player position should be -1 */
 static void printRoad(int columns, int carPosition, int carDirection, int playerPosition)
 {
     int i;
@@ -47,9 +49,9 @@ static void printRoad(int columns, int carPosition, int carDirection, int player
 
 }
 
-// Prints a row that is not a road
-// playerPosition is the horizontal position on this row
-// If player is not in this row playerPosition should be -1
+/*  Prints a row that is not a road
+    playerPosition is the horizontal position on this row
+    If player is not in this row playerPosition should be -1 */
 static void printSafeRow(int columns, int playerPosition, int goal)
 {
     int i;
@@ -74,12 +76,15 @@ static void printSafeRow(int columns, int playerPosition, int goal)
 }
 
 
-//Clears the old board and prints an updated one
+/*  erase the old board and prints an updated one */
 void printBoard(int rows, int columns, vector2d playerPosition,
                 int* carPositions, int* carDirections)
 {
+    
     int i;
     int finalPlayerX = playerPosition.y == rows - 1 ? playerPosition.x : -1; 
+    
+    system("tput cup 0 0");
 
     printBorderRow(columns);
 

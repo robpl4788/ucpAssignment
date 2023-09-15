@@ -11,6 +11,8 @@
 #define LEFT -1
 #define RIGHT 1
 
+
+
 typedef struct  
 {
     int x;

@@ -3,7 +3,6 @@
 
 #include "constants.h"
 
-void getMove(int rows, int columns, vector2d* playerMove, vector2d* playerPosition);
-void moveCars(int* carPositions, int* carDirections, int roadCount, int columns, vector2d* playerPosition, int* PgameStatus);
+int makeMove(int rows, int columns, int roadCount, vector2d* pPlayerPosition, int* carPositions, int* carDirections);
 
 #endif
