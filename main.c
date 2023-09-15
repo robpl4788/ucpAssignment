@@ -36,6 +36,7 @@ int main(int argc, char* argv[]) {
         /* Get input */
         /* Update board and check win/loss */
     system("clear");
+
     while (gameStatus == PLAYING) 
     {
         gameStatus = makeMove( rows, columns, roadCount, &playerPosition, carPositions, carDirections);
