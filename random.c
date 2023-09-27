@@ -1,3 +1,5 @@
+/* Supplied by Curtin Staff */
+
 #include<stdlib.h>
 #include<time.h>
 #include"random.h"

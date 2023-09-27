@@ -1,3 +1,5 @@
+/* Supplied by Curtin Staff */
+
 #include<stdio.h>
 #include<termios.h>
 #include"terminal.h"

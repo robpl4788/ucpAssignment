@@ -1,3 +1,5 @@
+/* Supplied by Curtin Staff */
+
 #ifndef TERMINAL_H
 #define TERMINAL_H
 

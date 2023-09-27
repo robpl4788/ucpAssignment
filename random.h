@@ -1,3 +1,5 @@
+/* Supplied by Curtin Staff */
+
 #ifndef RANDOM_H
 #define RANDOM_H
 
