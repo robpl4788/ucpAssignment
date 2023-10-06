@@ -12,37 +12,29 @@
 int main(int argc, char* argv[]) {
     /* Validate Inputs */
 
-    int rows, columns;
+    FILE* gameFile;
+    BoardState board;
 
-    if (validateInputs(&rows, &columns, &argc, argv)) {
+    /* Confirm inputs are valid and Initialise Map */
 
-    /* Initialise Map */
+    if (validateInputs(argc, argv, &gameFile) && initBoardState(&board, gameFile)) {
 
-    Vector2d playerPosition = {0, 0};
-
-
-    int roadCount = rows / 2;
 
     int gameStatus = PLAYING;
-
-    int* carPositions = malloc(sizeof(int) * roadCount);
-    int* carDirections = malloc(sizeof(int) * roadCount);
   
-    initialiseCars(carPositions, carDirections, roadCount, columns);
-
     /* Loop until win or lose */
         /* Print board */
         /* Get input */
         /* Update board and check win/loss */
     system("clear");
 
-    while (gameStatus == PLAYING) 
+/*    while (gameStatus == PLAYING) 
     {
         gameStatus = makeMove( rows, columns, roadCount, &playerPosition, carPositions, carDirections);
     }
 
     printBoard(rows, columns, playerPosition, carPositions, carDirections);
-
+*/
     /* Handle Win and Lose */
     if (gameStatus == WIN) {
         printf("You Win\n");
@@ -53,8 +45,7 @@ int main(int argc, char* argv[]) {
 
     /* End Game */
 
-    free(carPositions);
-    free(carDirections);
+    freeBoardState(&board);
 
     }
 

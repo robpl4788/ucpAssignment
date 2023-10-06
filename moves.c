@@ -42,27 +42,7 @@ static void getMove(int rows, int columns, Vector2d* playerMove, Vector2d* playe
 static void moveCars( int* carPositions, int* carDirections, int roadCount,
                int columns, Vector2d* playerPosition, int* PgameStatus )
 {
-    int i;
-    for ( i = 0; i < roadCount; i ++ )
-    {
-        int row = i * 2 + 1;
-
-        carPositions[i] = carPositions[i] + carDirections[i];
-
-        if ( carPositions[i] == 0 )
-        {
-            carDirections[i] = RIGHT;
-        }
-        else if ( carPositions[i] == columns - 1 )
-        {
-            carDirections[i] = LEFT;
-        }
-
-        if ( carPositions[i] == playerPosition->x && row == playerPosition->y )
-        {
-            *PgameStatus = LOSE;
-        }
-    }
+   
 }
 
 int makeMove(int rows, int columns, int roadCount, Vector2d* pPlayerPosition, int* carPositions, int* carDirections)

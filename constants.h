@@ -8,14 +8,17 @@
 #define LOSE -1
 #define PLAYING 0
 
-#define LEFT -1
-#define RIGHT 1
+#define FILE_EMPTY 0
+#define FILE_ROAD 1
+#define FILE_CAR 2
+#define FILE_PLAYER 3
+#define FILE_GOAL 4
 
 #define WALL "*"
 #define EMPTY " "
 #define ROAD "."
-#define PLAYER "P"
-#define GOAL "G"
+#define PLAYER 'P'
+#define GOAL 'G'
 
 #define LEFT_CAR "<"
 #define RIGHT_CAR ">"
@@ -51,10 +54,16 @@ typedef struct
     Object player;
     Car car;
     Object goal;
-    char** board;
+    int** roads;
     int rows;
     int columns;
     
 } BoardState;
+
+void printObject(Object toPrint);
+void printCar(Car toPrint);
+void freeBoardState(BoardState* toFree);
+
+
 
 #endif

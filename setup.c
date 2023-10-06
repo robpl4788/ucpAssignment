@@ -9,29 +9,19 @@
 /*  Checks the input arguments are valid
     If invalid returns false and prints the reason */
 
-int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[]) {
+int validateInputs(int argc, char* argv[], FILE** gameFile) {
     int inputsAreValid = TRUE;
 
-    if (*pArgc != 3) {
+    if (argc != 2) {
         inputsAreValid = FALSE;
-        printf("Incorrect number of arguments, should be 2, is %d\n", *pArgc);
+        printf("Incorrect number of arguments, should be 1, is %d\n", argc);
     }
     else {
-        *pRows = atoi(argv[1]);
-        *pCols = atoi(argv[2]);
-        if (*pRows < 3)
+        *gameFile = fopen(argv[1], "r");
+        if (gameFile == NULL)
         {
-            printf("Row number ( %d ) is invalid, must be greater than 2\n", *pRows);
-            inputsAreValid = FALSE;
-        }
-        if (*pRows % 2 == 0)
-        {
-            printf("Row number ( %d ) is invalid, must be odd\n", *pRows);
-            inputsAreValid = FALSE;
-        }
-        if (*pCols < 5)
-        {
-            printf("Column number ( %d ) is invalid, must be greater than 4\n", *pCols);
+            printf("File Path (%s) is invalid: ", argv[1]);
+            perror("");
             inputsAreValid = FALSE;
         }
     }
@@ -39,27 +29,116 @@ int validateInputs(int* pRows, int* pCols, int* pArgc, char* argv[]) {
     return inputsAreValid;
 }
 
-void initialiseCars(int* carPositions, int* carDirections, int roadCount, int columns){
-    int i;
+int initBoardState(BoardState* board, FILE* inputFile)
+{
+    int succesful = TRUE;
 
-    initRandom();
+    int nRead = fscanf(inputFile, "%d %d", &board->rows, &board->columns);
 
-    /* Generate car positions and assign directions */
-
-    for (i = 0; i < roadCount; i ++)
+    if (nRead != 2)
     {
-        carPositions[i] = randomUCP(0, columns - 1);
-        if (carPositions[i] == 0) 
-        {
-            carDirections[i] = RIGHT;
-        }
-        else if (carPositions[i] == columns - 1)
-        {
-            carDirections[i] = LEFT;
-        }
-        else
-        {
-            carDirections[i] = randomUCP(0, 1) == 0 ? LEFT : RIGHT;
-        }
+        printf("Input file is invalid, line 1 has %d arguments, expected 2", nRead);
+        succesful = FALSE;
     }
+
+    else 
+    {
+    int i;
+    int carNum = 0;
+    int goalNum = 0;
+    int playerNum = 0;
+
+    board->roads = malloc(sizeof(int*) * board->rows);
+    for (i = 0; i < board->rows; i ++)
+    {
+        int j;
+
+        char* row = malloc(sizeof(char) * board->columns * 2);
+
+        if (fgets(row, board->columns * 2, inputFile) == NULL)
+        {
+            printf("Error in line %d of input file", i + 2);
+        }
+
+        board->roads[i] = malloc(sizeof(int) * board->columns);
+
+        for (j = 0; j < board->columns; j ++)
+        {
+            int newEntry = row[j * 2];
+            Vector2d position;
+            position.x = i;
+            position.y = j;
+
+            
+            if (newEntry == FILE_EMPTY)
+            {
+                board->roads[i][j] = FALSE;
+            }
+            else if (newEntry == FILE_ROAD)
+            {
+                board->roads[i][j] = TRUE;
+            }
+            else if (newEntry == FILE_CAR)
+            {
+                Vector2d direction = {1, 0};
+                Car newCar;
+                newCar.position = position;
+                newCar.direction = direction;
+
+                board->roads[i][j] = TRUE;
+
+                carNum ++;
+
+                board->car = newCar;
+            }
+            else if (newEntry == FILE_PLAYER)
+            {
+                char symbol = PLAYER;
+                Object newPlayer;
+                newPlayer.position = position;
+                newPlayer.symbol = symbol;
+                
+                board->roads[i][j] = FALSE;
+
+                playerNum ++;
+
+                board->player = newPlayer;
+            }
+            else if (newEntry == FILE_GOAL)
+            {
+                char symbol = GOAL;
+                Object newGoal;
+                newGoal.position = position;
+                newGoal.symbol = symbol;
+                
+                board->roads[i][j] = FALSE;
+
+                goalNum ++;
+
+                board->goal = newGoal;
+            }
+            
+        }
+
+    }
+
+    if (carNum != 1)
+    {
+        printf("Incorrect number of cars (%d), should be 1", carNum);
+        succesful = FALSE;
+    }
+    if (playerNum != 1)
+    {
+        printf("Incorrect number of players (%d), should be 1", carNum);
+        succesful = FALSE;
+    }
+    if (goalNum != 1)
+    {
+        printf("Incorrect number of goals (%d), should be 1", carNum);
+        succesful = FALSE;
+    }
+
+    }
+
+    return succesful;
 }

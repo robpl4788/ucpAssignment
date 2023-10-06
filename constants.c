@@ -1,23 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "constants.h"
 
-Object* newObject(Vector2d position, char symbol)
+
+void printObject(Object toPrint)
 {
-    Object new = {position, symbol};
-    return &new;
+    printf("%c", toPrint.symbol);
 }
 
-Car* newCar(Vector2d position, Vector2d direction)
+void printCar(Car toPrint)
 {
-    Car new = {position, direction};
-    return &new;
-}
-
-BoardState* newBoard(Vector2d playerPosistion, Vector2d carPosition, Vector2d carDirection, Vector2d goalPosition)
-{
-    Object player = *newObject(playerPosistion, PLAYER);
-    Car car = *newCar(carPosition, carDirection);
-    Object goal = *newObject(goalPosition, GOAL);
-
+    if (toPrint.direction.x == 1 && toPrint.direction.y == 0)
+    {
+        printf(RIGHT_CAR);
+    }
+    else if (toPrint.direction.x == -1 && toPrint.direction.y == 0)
+    {
+        printf(LEFT_CAR);
+    }
+    else if (toPrint.direction.x == 0 && toPrint.direction.y == 1)
+    {
+        printf(DOWN_CAR);
+    }
+    else if (toPrint.direction.x == 0 && toPrint.direction.y == -1)
+    {
+        printf(UP_CAR);
+    }
     
+}
 
+void freeBoardState(BoardState* toFree)
+{
+    int currentRow;
+    
+    for (currentRow = 0; currentRow < toFree->rows; currentRow ++)
+    {
+        free(toFree->roads[currentRow]);
+    }
+    free(toFree->roads);
 }
