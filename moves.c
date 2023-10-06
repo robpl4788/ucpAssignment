@@ -9,7 +9,7 @@
 /*  Attempts to get a new move, checks if it's valid
     If  valid, sets the referenced player move to the new move
     If invalid doesn't change the plater move */
-static void getMove(int rows, int columns, vector2d* playerMove, vector2d* playerPosition)
+static void getMove(int rows, int columns, Vector2d* playerMove, Vector2d* playerPosition)
 {
     char input;
     
@@ -40,7 +40,7 @@ static void getMove(int rows, int columns, vector2d* playerMove, vector2d* playe
     If the cars hit the player sets the referenced game state to lose */
 
 static void moveCars( int* carPositions, int* carDirections, int roadCount,
-               int columns, vector2d* playerPosition, int* PgameStatus )
+               int columns, Vector2d* playerPosition, int* PgameStatus )
 {
     int i;
     for ( i = 0; i < roadCount; i ++ )
@@ -65,10 +65,10 @@ static void moveCars( int* carPositions, int* carDirections, int roadCount,
     }
 }
 
-int makeMove(int rows, int columns, int roadCount, vector2d* pPlayerPosition, int* carPositions, int* carDirections)
+int makeMove(int rows, int columns, int roadCount, Vector2d* pPlayerPosition, int* carPositions, int* carDirections)
 {
     int gameStatus = PLAYING;
-    vector2d playerMove = {0, 0};
+    Vector2d playerMove = {0, 0};
 
     printBoard(rows, columns, *pPlayerPosition, carPositions, carDirections);
 

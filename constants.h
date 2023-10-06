@@ -19,6 +19,8 @@
 
 #define LEFT_CAR "<"
 #define RIGHT_CAR ">"
+#define UP_CAR "^"
+#define DOWN_CAR "v"
 
 #define KEY_UP 'w'
 #define KEY_LEFT 'a'
@@ -29,6 +31,30 @@ typedef struct
 {
     int x;
     int y;
-} vector2d;
+} Vector2d;
+
+typedef struct  
+{
+    Vector2d position;
+    Vector2d direction;
+} Car;
+
+typedef struct
+{
+    Vector2d position;
+    char symbol;
+} Object;
+
+
+typedef struct
+{
+    Object player;
+    Car car;
+    Object goal;
+    char** board;
+    int rows;
+    int columns;
+    
+} BoardState;
 
 #endif

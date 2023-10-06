@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -pedantic -ansi
-OBJ = main.o random.o printBoard.o moves.o terminal.o setup.o
+OBJ = main.o random.o printBoard.o moves.o terminal.o setup.o constants.o
 EXEC = traffic
 
 $(EXEC) : $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
 
-main.o: main.c main.h moves.h random.h printBoard.h constants.h terminal.h setup.h
+main.o: main.c main.h moves.h random.h printBoard.h constants.h terminal.h setup.h constants.h
 	$(CC) -c main.c $(CFLAGS)
 
 random.o: random.c random.h
@@ -23,6 +23,10 @@ terminal.o: terminal.c terminal.h
 
 setup.o: setup.c setup.h random.h constants.h
 	$(CC) -c setup.c $(CFLAGS)
+
+constants.o: constants.c constants.h
+	$(CC) -c constants.c $(CFLAGS)
+
 
 clean:
 	rm -f $(EXEC) $(OBJ)

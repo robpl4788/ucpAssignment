@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 
     /* Initialise Map */
 
-    vector2d playerPosition = {0, 0};
+    Vector2d playerPosition = {0, 0};
 
 
     int roadCount = rows / 2;

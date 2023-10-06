@@ -79,7 +79,7 @@ static void printSafeRow(int columns, int playerPosition, int goal)
 
 
 /*  erase the old board and prints an updated one */
-void printBoard(int rows, int columns, vector2d playerPosition,
+void printBoard(int rows, int columns, Vector2d playerPosition,
                 int* carPositions, int* carDirections)
 {
     
