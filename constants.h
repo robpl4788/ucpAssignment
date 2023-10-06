@@ -17,8 +17,8 @@
 #define WALL "*"
 #define EMPTY " "
 #define ROAD "."
-#define PLAYER 'P'
-#define GOAL 'G'
+#define PLAYER "P"
+#define GOAL "G"
 
 #define LEFT_CAR "<"
 #define RIGHT_CAR ">"
@@ -42,25 +42,18 @@ typedef struct
     Vector2d direction;
 } Car;
 
-typedef struct
-{
-    Vector2d position;
-    char symbol;
-} Object;
-
 
 typedef struct
 {
-    Object player;
+    Vector2d player;
     Car car;
-    Object goal;
+    Vector2d goal;
     int** roads;
     int rows;
     int columns;
     
 } BoardState;
 
-void printObject(Object toPrint);
 void printCar(Car toPrint);
 void freeBoardState(BoardState* toFree);
 

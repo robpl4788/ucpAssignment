@@ -50,8 +50,8 @@ int makeMove(int rows, int columns, int roadCount, Vector2d* pPlayerPosition, in
     int gameStatus = PLAYING;
     Vector2d playerMove = {0, 0};
 
-    printBoard(rows, columns, *pPlayerPosition, carPositions, carDirections);
-
+    /*printBoard(rows, columns, *pPlayerPosition, carPositions, carDirections);
+*/
     while (playerMove.x == 0 && playerMove.y == 0)
     {
         getMove(rows, columns, &playerMove, pPlayerPosition);

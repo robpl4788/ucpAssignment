@@ -53,9 +53,9 @@ int initBoardState(BoardState* board, FILE* inputFile)
     {
         int j;
 
-        char* row = malloc(sizeof(char) * board->columns * 2);
+        char* row = malloc(sizeof(char) * board->columns * 2 + 1);
 
-        if (fgets(row, board->columns * 2, inputFile) == NULL)
+        if (fgets(row, board->columns * 2 + 1, inputFile) == NULL)
         {
             printf("Error in line %d of input file", i + 2);
         }
@@ -64,10 +64,9 @@ int initBoardState(BoardState* board, FILE* inputFile)
 
         for (j = 0; j < board->columns; j ++)
         {
-            int newEntry = row[j * 2];
-            Vector2d position;
-            position.x = i;
-            position.y = j;
+            int newEntry = atoi(&row[j * 2]);
+
+/*            printf("%d", newEntry);*/
 
             
             if (newEntry == FILE_EMPTY)
@@ -79,9 +78,14 @@ int initBoardState(BoardState* board, FILE* inputFile)
                 board->roads[i][j] = TRUE;
             }
             else if (newEntry == FILE_CAR)
-            {
+            {            
+                Vector2d position;
                 Vector2d direction = {1, 0};
                 Car newCar;
+
+                position.x = i;
+                position.y = j;
+
                 newCar.position = position;
                 newCar.direction = direction;
 
@@ -93,48 +97,43 @@ int initBoardState(BoardState* board, FILE* inputFile)
             }
             else if (newEntry == FILE_PLAYER)
             {
-                char symbol = PLAYER;
-                Object newPlayer;
-                newPlayer.position = position;
-                newPlayer.symbol = symbol;
                 
                 board->roads[i][j] = FALSE;
 
                 playerNum ++;
 
-                board->player = newPlayer;
+                board->player.x = i;
+                board->player.y = j;
+
             }
             else if (newEntry == FILE_GOAL)
-            {
-                char symbol = GOAL;
-                Object newGoal;
-                newGoal.position = position;
-                newGoal.symbol = symbol;
-                
+            {                
                 board->roads[i][j] = FALSE;
 
                 goalNum ++;
 
-                board->goal = newGoal;
+                board->goal.x = i;
+                board->goal.y = j;
             }
             
         }
+/*      printf("  %d\n", board->columns);*/
 
     }
 
     if (carNum != 1)
     {
-        printf("Incorrect number of cars (%d), should be 1", carNum);
+        printf("Incorrect number of cars (%d), should be 1\n", carNum);
         succesful = FALSE;
     }
     if (playerNum != 1)
     {
-        printf("Incorrect number of players (%d), should be 1", carNum);
+        printf("Incorrect number of players (%d), should be 1\n", carNum);
         succesful = FALSE;
     }
     if (goalNum != 1)
     {
-        printf("Incorrect number of goals (%d), should be 1", carNum);
+        printf("Incorrect number of goals (%d), should be 1\n", carNum);
         succesful = FALSE;
     }
 

@@ -4,10 +4,6 @@
 #include "constants.h"
 
 
-void printObject(Object toPrint)
-{
-    printf("%c", toPrint.symbol);
-}
 
 void printCar(Car toPrint)
 {
