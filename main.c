@@ -28,16 +28,28 @@ int main(int argc, char* argv[]) {
         /* Update board and check win/loss */
     system("clear");
 
-    printBoard(board);
 
-/*
+
     while (gameStatus == PLAYING) 
     {
-        gameStatus = makeMove( rows, columns, roadCount, &playerPosition, carPositions, carDirections);
+        Vector2d playerMove = {0, 0};
+        int undo = FALSE;
+
+        printBoard(board);
+
+        while (playerMove.x == 0 && playerMove.y == 0 && !undo)
+        {
+            getMove(board.rows, board.columns, &undo, &playerMove, &board.player);
+        }
+        if (undo){
+
+        } else {
+            gameStatus = makeMove(&board, playerMove);
+        }
+
     }
 
-    printBoard(rows, columns, playerPosition, carPositions, carDirections);
-*/
+    printBoard(board);
     /* Handle Win and Lose */
     if (gameStatus == WIN) {
         printf("You Win\n");

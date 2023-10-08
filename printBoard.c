@@ -32,13 +32,13 @@ void printBoard(BoardState board)
 
         for (j = 0; j < board.columns; j ++)
         {
-            if (board.player.x == i && board.player.y == j)
+            if (board.player.x == j && board.player.y == i)
             {
                 printf(PLAYER);
-            } else if (board.goal.x == i && board.goal.y == j)
+            } else if (board.goal.x == j && board.goal.y == i)
             {
                 printf(GOAL);
-            } else if (board.car.position.x == i && board.car.position.y == j)
+            } else if (board.car.position.x == j && board.car.position.y == i)
             {
                 printCar(board.car);
             } else if (board.roads[i][j])

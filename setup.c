@@ -33,7 +33,7 @@ int initBoardState(BoardState* board, FILE* inputFile)
 {
     int succesful = TRUE;
 
-    int nRead = fscanf(inputFile, "%d %d", &board->rows, &board->columns);
+    int nRead = fscanf(inputFile, "%d %d\n", &board->rows, &board->columns);
 
     if (nRead != 2)
     {

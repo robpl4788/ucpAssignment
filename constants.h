@@ -29,6 +29,7 @@
 #define KEY_LEFT 'a'
 #define KEY_DOWN 's'
 #define KEY_RIGHT 'd'
+#define KEY_UNDO 'u'
 
 typedef struct  
 {
@@ -53,6 +54,13 @@ typedef struct
     int columns;
     
 } BoardState;
+
+Vector2d rotateCW(Vector2d toRotate);
+Vector2d rotateCCW(Vector2d toRotate);
+Vector2d reverse(Vector2d toReverse);
+Vector2d sum(Vector2d a, Vector2d b);
+int Vector2dIsEqual(Vector2d a, Vector2d b);
+
 
 void printCar(Car toPrint);
 void freeBoardState(BoardState* toFree);

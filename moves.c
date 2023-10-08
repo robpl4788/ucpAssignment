@@ -9,7 +9,7 @@
 /*  Attempts to get a new move, checks if it's valid
     If  valid, sets the referenced player move to the new move
     If invalid doesn't change the plater move */
-static void getMove(int rows, int columns, Vector2d* playerMove, Vector2d* playerPosition)
+void getMove(int rows, int columns, int* undo, Vector2d* playerMove, Vector2d* playerPosition)
 {
     char input;
     
@@ -32,6 +32,8 @@ static void getMove(int rows, int columns, Vector2d* playerMove, Vector2d* playe
     else if ( input == KEY_RIGHT && playerPosition->x != columns - 1 )
     {
         playerMove->x = 1;
+    } else if (input == KEY_UNDO) {
+        *undo = TRUE;
     }
 }
 
@@ -39,33 +41,62 @@ static void getMove(int rows, int columns, Vector2d* playerMove, Vector2d* playe
 /*  Moves all the cars
     If the cars hit the player sets the referenced game state to lose */
 
-static void moveCars( int* carPositions, int* carDirections, int roadCount,
-               int columns, Vector2d* playerPosition, int* PgameStatus )
+static void moveCars(BoardState* board)
 {
-   
+    Vector2d carPos = board->car.position;
+    Vector2d carDir = board->car.direction;
+
+    Vector2d left = rotateCCW(carDir);
+    Vector2d right = rotateCW(carDir);
+    Vector2d back = reverse(carDir);
+
+    Vector2d carForward = sum(carPos, carDir);
+    Vector2d carLeft = sum(carPos, left);
+    Vector2d carRight = sum(carPos, right);
+    Vector2d carBack = sum(carPos, back);
+    
+
+    if (board->roads[carForward.y][carForward.x])
+    {
+        board->car.position = carForward;
+    } else if (board->roads[carLeft.y][carLeft.x])
+    {
+        board->car.position = carLeft;
+        board->car.direction = left;
+    } else if (board->roads[carRight.y][carRight.x])
+    {
+        board->car.position = carRight;
+        board->car.direction = right;
+    } else if (board->roads[carBack.y][carBack.x])
+    {
+        board->car.position = carBack;
+        board->car.direction = back;
+    } else {
+        printf("Car is now 4wd and has escaped the road, good luck");
+    }
 }
 
-int makeMove(int rows, int columns, int roadCount, Vector2d* pPlayerPosition, int* carPositions, int* carDirections)
+int makeMove(BoardState* board, Vector2d move)
 {
     int gameStatus = PLAYING;
-    Vector2d playerMove = {0, 0};
 
     /*printBoard(rows, columns, *pPlayerPosition, carPositions, carDirections);
 */
-    while (playerMove.x == 0 && playerMove.y == 0)
-    {
-        getMove(rows, columns, &playerMove, pPlayerPosition);
-    }
 
-    pPlayerPosition->x += playerMove.x;
-    pPlayerPosition->y += playerMove.y;
+
+    board->player.x += move.x;
+    board->player.y += move.y;
     
-    moveCars(carPositions, carDirections, roadCount, columns, pPlayerPosition, &gameStatus);
+    moveCars(board);
 
-    if (pPlayerPosition->x == columns - 1 && pPlayerPosition->y == rows - 1)
+    if (board->player.x == board->goal.x && board->player.y == board->goal.y)
     {
         gameStatus = WIN;
+    } else if (board->player.x == board->car.position.x && board->player.y == board->car.position.y)
+    {
+        gameStatus = LOSE;
     }
+    
 
     return gameStatus;
 }

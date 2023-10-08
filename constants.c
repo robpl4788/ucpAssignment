@@ -4,6 +4,58 @@
 #include "constants.h"
 
 
+Vector2d rotateCW(Vector2d toRotate)
+{
+    Vector2d result;
+    result.x = -toRotate.y;
+    result.y = toRotate.x;
+
+    return result;
+}
+
+Vector2d rotateCCW(Vector2d toRotate)
+{
+    Vector2d result;
+    result.x = toRotate.y;
+    result.y =-toRotate.x;
+
+    return result;
+}
+
+Vector2d reverse(Vector2d toReverse)
+{
+    Vector2d result;
+
+    result.x = -1 * toReverse.x;
+    result.y = -1 * toReverse.y;
+
+    return result;
+}
+
+Vector2d sum(Vector2d a, Vector2d b)
+{
+    Vector2d result;
+    
+    result.x = a.x + b.x;
+    result.y = a.y + b.y;
+
+    return result;
+}
+
+int Vector2dIsEqual(Vector2d a, Vector2d b)
+{
+    int result = TRUE;
+    if (a.x != b.x) {
+        result = FALSE;
+    }
+    
+    if (a.y != b.y) {
+        result = FALSE;
+    }
+
+    return result;
+}
+
 
 void printCar(Car toPrint)
 {
