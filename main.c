@@ -6,6 +6,7 @@
 #include "moves.h"
 #include "constants.h"
 #include "setup.h"
+#include "linkedList.h"
 
 
 
@@ -21,13 +22,14 @@ int main(int argc, char* argv[]) {
 
 
     int gameStatus = PLAYING;
+    LinkedList pastBoards = {NULL};
+
   
     /* Loop until win or lose */
         /* Print board */
         /* Get input */
         /* Update board and check win/loss */
-    system("clear");
-
+    /*system("clear");*/
 
 
     while (gameStatus == PLAYING) 
@@ -42,10 +44,20 @@ int main(int argc, char* argv[]) {
             getMove(board.rows, board.columns, &undo, &playerMove, &board.player);
         }
         if (undo){
+            fflush(stdout);
+            if (pastBoards.head != NULL) {
+                board = *((BoardState*) (pastBoards.head->data));
+                popFront(&pastBoards, &free);
+            }
 
         } else {
+            BoardState* initial = malloc(sizeof(BoardState));
+            *initial = board;
+            pushFront(&pastBoards, initial);
+
             gameStatus = makeMove(&board, playerMove);
         }
+        printf("%d", pastBoards.head == NULL);
 
     }
 
@@ -61,6 +73,8 @@ int main(int argc, char* argv[]) {
     /* End Game */
 
     freeBoardState(&board);
+
+    freeList(&pastBoards, &free);
 
     }
 

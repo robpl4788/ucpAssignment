@@ -117,6 +117,7 @@ int initBoardState(BoardState* board, FILE* inputFile)
             }
             
         }
+        free(row);
 /*      printf("  %d\n", board->columns);*/
 
     }
