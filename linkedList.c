@@ -15,7 +15,8 @@ void popFront(LinkedList* list, void dataFreer(void*))
 {
     Node* newHead = list->head->next;
 
-    dataFreer(list->head);
+    dataFreer(list->head->data);
+    free(list->head);
 
     list->head = newHead;
 }
@@ -27,7 +28,8 @@ void freeList(LinkedList* list, void dataFreer(void*))
     while (nextToFree != NULL)
     {
         Node* freeAfter = nextToFree->next;
-        dataFreer(nextToFree);
+        dataFreer(nextToFree->data);
+        free(nextToFree);
 
         nextToFree = freeAfter;
     }
