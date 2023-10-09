@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "linkedList.h"
 
@@ -26,7 +27,6 @@ void freeList(LinkedList* list, void dataFreer(void*))
     while (nextToFree != NULL)
     {
         Node* freeAfter = nextToFree->next;
-
         dataFreer(nextToFree);
 
         nextToFree = freeAfter;

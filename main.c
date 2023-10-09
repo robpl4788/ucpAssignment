@@ -13,7 +13,7 @@
 int main(int argc, char* argv[]) {
     /* Validate Inputs */
 
-    FILE* gameFile;
+    FILE* gameFile = NULL;
     BoardState board;
 
     /* Confirm inputs are valid and Initialise Map */
@@ -57,8 +57,6 @@ int main(int argc, char* argv[]) {
 
             gameStatus = makeMove(&board, playerMove);
         }
-        printf("%d", pastBoards.head == NULL);
-
     }
 
     printBoard(board);
@@ -76,6 +74,10 @@ int main(int argc, char* argv[]) {
 
     freeList(&pastBoards, &free);
 
+    if (gameFile != NULL)
+    {
+        fclose(gameFile);
+    }
     }
 
     return 0;

@@ -78,6 +78,8 @@ void printCar(Car toPrint)
     
 }
 
+
+
 void freeBoardState(BoardState* toFree)
 {
     int currentRow;
