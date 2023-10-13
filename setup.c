@@ -29,6 +29,116 @@ int validateInputs(int argc, char* argv[], FILE** gameFile) {
     return inputsAreValid;
 }
 
+
+/* Sets a designated position to be empty in a board*/
+static void newEmpty(int i, int j, BoardState* board)
+{
+    board->roads[i][j] = FALSE;
+}
+
+/* Sets a designated position to be a road in a board*/
+static void newRoad(int i, int j, BoardState* board)
+{
+    board->roads[i][j] = TRUE;
+}
+
+/* Sets a designated position to be a car in a board, increments the count of cars*/
+static void newCar(int i, int j, BoardState* board, int* carNum)
+{
+    Vector2d position;
+    Vector2d direction = {1, 0};
+    Car newCar;
+
+    position.x = i;
+    position.y = j;
+
+    newCar.position = position;
+    newCar.direction = direction;
+
+    board->roads[i][j] = TRUE;
+
+    *carNum += 1;
+
+    board->car = newCar;
+}
+
+
+/* Sets a designated position to be a player in a board, increments the count of players*/
+static void newPlayer(int i, int j, BoardState* board, int* playerNum)
+{
+    board->roads[i][j] = FALSE;
+
+    *playerNum += 1;
+
+    board->player.x = i;
+    board->player.y = j;
+}
+
+
+/* Sets a designated position to be a goal in a board, increments the count of goals*/
+static void newGoal(int i, int j, BoardState* board, int* goalNum)
+{
+    board->roads[i][j] = FALSE;
+
+    *goalNum += 1;
+
+    board->goal.x = i;
+    board->goal.y = j;
+}
+
+
+/* Sets a designated position to be what is stated by entry */
+static void newEntry(char entry, int i, int j, BoardState* board, int* carNum, int* playerNum, int* goalNum)
+{
+    if (entry == FILE_EMPTY)
+    {
+        newEmpty(i, j, board);
+    }
+    else if (entry == FILE_ROAD)
+    {
+        newRoad(i, j, board);
+    }
+    else if (entry == FILE_CAR)
+    {            
+        newCar(i, j, board, carNum);
+    }
+    else if (entry == FILE_PLAYER)
+    {
+        newPlayer(i, j, board, playerNum);
+    }
+    else if (entry == FILE_GOAL)
+    {                
+        newGoal(i, j, board, goalNum);
+    }
+}
+
+
+/* Confirms that there was only one car, player and goal initialised */
+static int confirmNumbers(int carNum, int playerNum, int goalNum)
+{
+    int succesful = TRUE;
+
+    if (carNum != 1)
+    {
+        printf("Incorrect number of cars (%d), should be 1\n", carNum);
+        succesful = FALSE;
+    }
+    if (playerNum != 1)
+    {
+        printf("Incorrect number of players (%d), should be 1\n", playerNum);
+        succesful = FALSE;
+    }
+    if (goalNum != 1)
+    {
+        printf("Incorrect number of goals (%d), should be 1\n", goalNum);
+        succesful = FALSE;
+    }
+
+    return succesful;
+}
+
+
+/* Reads through input file and initialises the board state */
 int initBoardState(BoardState* board, FILE* inputFile)
 {
     int succesful = TRUE;
@@ -49,6 +159,7 @@ int initBoardState(BoardState* board, FILE* inputFile)
     int playerNum = 0;
 
     board->roads = malloc(sizeof(int*) * board->rows);
+
     for (i = 0; i < board->rows; i ++)
     {
         int j;
@@ -64,80 +175,15 @@ int initBoardState(BoardState* board, FILE* inputFile)
 
         for (j = 0; j < board->columns; j ++)
         {
-            int newEntry = atoi(&row[j * 2]);
+            int entry = atoi(&row[j * 2]);
 
-/*            printf("%d", newEntry);*/
-
-            
-            if (newEntry == FILE_EMPTY)
-            {
-                board->roads[i][j] = FALSE;
-            }
-            else if (newEntry == FILE_ROAD)
-            {
-                board->roads[i][j] = TRUE;
-            }
-            else if (newEntry == FILE_CAR)
-            {            
-                Vector2d position;
-                Vector2d direction = {1, 0};
-                Car newCar;
-
-                position.x = i;
-                position.y = j;
-
-                newCar.position = position;
-                newCar.direction = direction;
-
-                board->roads[i][j] = TRUE;
-
-                carNum ++;
-
-                board->car = newCar;
-            }
-            else if (newEntry == FILE_PLAYER)
-            {
-                
-                board->roads[i][j] = FALSE;
-
-                playerNum ++;
-
-                board->player.x = i;
-                board->player.y = j;
-
-            }
-            else if (newEntry == FILE_GOAL)
-            {                
-                board->roads[i][j] = FALSE;
-
-                goalNum ++;
-
-                board->goal.x = i;
-                board->goal.y = j;
-            }
+            newEntry(entry, i, j, board, &carNum, &playerNum, &goalNum);
             
         }
         free(row);
-/*      printf("  %d\n", board->columns);*/
-
     }
 
-    if (carNum != 1)
-    {
-        printf("Incorrect number of cars (%d), should be 1\n", carNum);
-        succesful = FALSE;
-    }
-    if (playerNum != 1)
-    {
-        printf("Incorrect number of players (%d), should be 1\n", carNum);
-        succesful = FALSE;
-    }
-    if (goalNum != 1)
-    {
-        printf("Incorrect number of goals (%d), should be 1\n", carNum);
-        succesful = FALSE;
-    }
-
+    succesful = confirmNumbers(carNum, playerNum, goalNum);
     }
 
     return succesful;

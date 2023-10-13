@@ -1,15 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "printBoard.h"
 #include "moves.h"
 #include "terminal.h"
 #include "constants.h"
+#include "linkedList.h"
 
 
 /*  Attempts to get a new move, checks if it's valid
     If  valid, sets the referenced player move to the new move
-    If invalid doesn't change the plater move */
-void getMove(int rows, int columns, int* undo, Vector2d* playerMove, Vector2d* playerPosition)
+    If invalid doesn't change the player move */
+static void getMove(int rows, int columns, int* undo, Vector2d* playerMove, Vector2d* playerPosition)
 {
     char input;
     
@@ -38,9 +40,7 @@ void getMove(int rows, int columns, int* undo, Vector2d* playerMove, Vector2d* p
 }
 
 
-/*  Moves all the cars
-    If the cars hit the player sets the referenced game state to lose */
-
+/*  Moves the car */
 static void moveCars(BoardState* board)
 {
     Vector2d carPos = board->car.position;
@@ -76,7 +76,11 @@ static void moveCars(BoardState* board)
     }
 }
 
-int makeMove(BoardState* board, Vector2d move)
+
+/* Moves car and player
+    If player is on goal, return win
+    If player is on car, return lose */
+static int makeMove(BoardState* board, Vector2d move)
 {
     int gameStatus = PLAYING;
 
@@ -97,6 +101,40 @@ int makeMove(BoardState* board, Vector2d move)
         gameStatus = LOSE;
     }
     
+
+    return gameStatus;
+}
+
+
+/* Get a new move, execute the move, return if won or loss */
+int takeTurn(BoardState* pBoard, LinkedList* pastBoards)
+{
+    int gameStatus = PLAYING;
+
+    Vector2d playerMove = {0, 0};
+    int undo = FALSE;
+
+    printBoard(*pBoard);
+
+    while (playerMove.x == 0 && playerMove.y == 0 && !undo)
+    {
+        getMove(pBoard->rows, pBoard->columns, &undo, &playerMove, &pBoard->player);
+    }
+
+    if (undo){
+        fflush(stdout);
+        if (pastBoards->head != NULL) {
+            *pBoard = *((BoardState*) (pastBoards->head->data));
+            popFront(pastBoards, &free);
+        }
+
+    } else {
+        BoardState* initial = malloc(sizeof(BoardState));
+        *initial = *pBoard;
+        pushFront(pastBoards, initial);
+
+        gameStatus = makeMove(pBoard, playerMove);
+    }
 
     return gameStatus;
 }

@@ -3,7 +3,7 @@
 
 #include "constants.h"
 
-
+/* Returns a Vector2d that is rotated 90 degrees clockwise from the input vector */
 Vector2d rotateCW(Vector2d toRotate)
 {
     Vector2d result;
@@ -13,6 +13,7 @@ Vector2d rotateCW(Vector2d toRotate)
     return result;
 }
 
+/* Returns a Vector2d that is rotated 90 degrees counter clockwise from the input vector */
 Vector2d rotateCCW(Vector2d toRotate)
 {
     Vector2d result;
@@ -22,6 +23,7 @@ Vector2d rotateCCW(Vector2d toRotate)
     return result;
 }
 
+/* Returns a Vector2d that is opposite the input vector */
 Vector2d reverse(Vector2d toReverse)
 {
     Vector2d result;
@@ -32,6 +34,7 @@ Vector2d reverse(Vector2d toReverse)
     return result;
 }
 
+/* Returns a Vector2d that is the sum of the input vectors */
 Vector2d sum(Vector2d a, Vector2d b)
 {
     Vector2d result;
@@ -42,6 +45,7 @@ Vector2d sum(Vector2d a, Vector2d b)
     return result;
 }
 
+/* Returns true if the input vectors have the same x and y values, false otherwise */
 int Vector2dIsEqual(Vector2d a, Vector2d b)
 {
     int result = TRUE;
@@ -56,7 +60,7 @@ int Vector2dIsEqual(Vector2d a, Vector2d b)
     return result;
 }
 
-
+/* Prints a Car to the terminal */
 void printCar(Car toPrint)
 {
     if (toPrint.direction.x == 1 && toPrint.direction.y == 0)
@@ -79,7 +83,7 @@ void printCar(Car toPrint)
 }
 
 
-
+/* Frees the road 2d array that is referenced by a boardstate */
 void freeBoardState(BoardState* toFree)
 {
     int currentRow;

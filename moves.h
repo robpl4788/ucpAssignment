@@ -2,9 +2,8 @@
 #define PLAYERMOVE_H
 
 #include "constants.h"
+#include "linkedList.h"
 
-int makeMove(BoardState* board, Vector2d move);
-void getMove(int rows, int columns, int* undo, Vector2d* playerMove, Vector2d* playerPosition);
-
+int takeTurn(BoardState* pBoard, LinkedList* pastBoards);
 
 #endif

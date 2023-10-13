@@ -11,55 +11,30 @@
 
 
 int main(int argc, char* argv[]) {
-    /* Validate Inputs */
 
     FILE* gameFile = NULL;
     BoardState board;
 
-    /* Confirm inputs are valid and Initialise Map */
+    /* Confirm inputs are valid and Initialise Map, if either fails game is not run */
 
     if (validateInputs(argc, argv, &gameFile) && initBoardState(&board, gameFile)) {
 
 
     int gameStatus = PLAYING;
     LinkedList pastBoards = {NULL};
+    
+    system("clear");
 
-  
-    /* Loop until win or lose */
-        /* Print board */
-        /* Get input */
-        /* Update board and check win/loss */
-    /*system("clear");*/
 
+    /* Loop until not playing */
 
     while (gameStatus == PLAYING) 
     {
-        Vector2d playerMove = {0, 0};
-        int undo = FALSE;
-
-        printBoard(board);
-
-        while (playerMove.x == 0 && playerMove.y == 0 && !undo)
-        {
-            getMove(board.rows, board.columns, &undo, &playerMove, &board.player);
-        }
-        if (undo){
-            fflush(stdout);
-            if (pastBoards.head != NULL) {
-                board = *((BoardState*) (pastBoards.head->data));
-                popFront(&pastBoards, &free);
-            }
-
-        } else {
-            BoardState* initial = malloc(sizeof(BoardState));
-            *initial = board;
-            pushFront(&pastBoards, initial);
-
-            gameStatus = makeMove(&board, playerMove);
-        }
+        gameStatus = takeTurn(&board, &pastBoards);
     }
 
     printBoard(board);
+
     /* Handle Win and Lose */
     if (gameStatus == WIN) {
         printf("You Win\n");

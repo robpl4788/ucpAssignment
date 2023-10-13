@@ -16,12 +16,12 @@ static void printBorderRow(int columns)
 }
 
 
-/*  erase the old board and prints an updated one */
+/*  Erase the old board and prints an updated one */
 void printBoard(BoardState board)
 {
     int i;
 
-    /*system("tput cup 0 0");*/
+    system("tput cup 0 0");
 
     printBorderRow(board.columns);
 
@@ -62,6 +62,7 @@ void printBoard(BoardState board)
     printf("%c to move left\n", KEY_LEFT);
     printf("%c to move right\n", KEY_RIGHT);
     printf("%c to move down\n", KEY_DOWN);
+    printf("%c to undo\n", KEY_UNDO);
 
 
 }

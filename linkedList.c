@@ -3,6 +3,7 @@
 
 #include "linkedList.h"
 
+/* Insert a new item at the front of a linked list */
 void pushFront(LinkedList* list, void* data)
 {
     Node* new = malloc(sizeof(Node));
@@ -11,6 +12,8 @@ void pushFront(LinkedList* list, void* data)
     list->head = new;
 }
 
+/* Deletes the first element of a linked list
+- dataFreer is called on the data pointer stored by the node */
 void popFront(LinkedList* list, void dataFreer(void*))
 {
     Node* newHead = list->head->next;
@@ -21,6 +24,8 @@ void popFront(LinkedList* list, void dataFreer(void*))
     list->head = newHead;
 }
 
+/* Delets all elements of a linked list
+- dataFreer is called on the data pointer stored by the node */
 void freeList(LinkedList* list, void dataFreer(void*))
 {
     Node* nextToFree = list->head;
