@@ -21,7 +21,7 @@ void printBoard(BoardState board)
 {
     int i;
 
-    /*system("tput cup 0 0");*/
+    system("tput cup 0 0");
 
     printBorderRow(board.columns);
 

@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-#include "constants.h"
 #include "setup.h"
-#include "random.h"
+#include "constants.h"
 
 /*  Checks the input arguments are valid
     If invalid returns false and prints the reason */
@@ -142,7 +140,6 @@ static int confirmNumbers(int carNum, int playerNum, int goalNum)
 int initBoardState(BoardState* board, FILE* inputFile)
 {
     int succesful = TRUE;
-
     int nRead = fscanf(inputFile, "%d %d\n", &board->rows, &board->columns);
 
     if (nRead != 2)

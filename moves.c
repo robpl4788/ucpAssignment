@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "printBoard.h"
 #include "moves.h"
+#include "printBoard.h"
 #include "terminal.h"
 #include "constants.h"
 #include "linkedList.h"
