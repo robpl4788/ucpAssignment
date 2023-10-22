@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     int gameStatus = PLAYING;
     LinkedList pastBoards = {NULL};
     
-    system("clear");
+    /*system("clear");*/
 
 
     /* Loop until not playing */
